@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>بطاقة تلميذ</title>
+<meta name="description" content="أنشئ بطاقات التلاميذ بوجهين مع الصورة، واطبع القائمة كاملة مع علامات القص عند الزوايا.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="بطاقة تلميذ">
+<meta property="og:description" content="أنشئ بطاقات التلاميذ بوجهين مع الصورة، واطبع القائمة كاملة مع علامات القص عند الزوايا.">
+<meta property="og:url" content="https://smwknjyb5-glitch.github.io/carte-eleve/">
+<meta property="og:image" content="https://smwknjyb5-glitch.github.io/carte-eleve/carte-preview.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+:root{--bg:#eef3f9;--panel:#fff;--ink:#14213d;--muted:#5b6b85;--line:#cfd9e8;--brand:#1d3557;--accent:#f2b705;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1626;--panel:#16213a;--ink:#e8eefb;--muted:#9fb0cc;--line:#2a3a5c;--brand:#7aa7e6}}
+:root[data-theme="dark"]{--bg:#0e1626;--panel:#16213a;--ink:#e8eefb;--muted:#9fb0cc;--line:#2a3a5c;--brand:#7aa7e6}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Cairo',Tahoma,Arial,sans-serif;line-height:1.7}
+main{max-width:1000px;margin:0 auto;padding:16px;display:grid;gap:16px;grid-template-columns:minmax(0,340px) minmax(0,1fr)}
+@media (max-width:760px){main{grid-template-columns:1fr}}
+h1{font-size:22px;margin:0 0 4px;grid-column:1/-1}
+.sub{color:var(--muted);margin:0 0 4px;grid-column:1/-1}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px}
+label{display:block;font-size:14px;font-weight:600;margin-top:10px}
+input,select{width:100%;font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
+input:focus-visible,select:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-offset:1px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.colors{display:flex;gap:8px;margin-top:6px}
+.sw{width:34px;height:34px;border-radius:50%;border:3px solid transparent;cursor:pointer;padding:0}
+.sw[aria-pressed="true"]{border-color:var(--ink)}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+button.act{font:inherit;font-weight:600;padding:9px 14px;border-radius:8px;border:1px solid var(--brand);background:var(--brand);color:#fff;cursor:pointer}
+:root[data-theme="dark"] button.act{color:#0e1626}
+button.act.alt{background:transparent;color:var(--brand)}
+.stage{display:flex;flex-direction:column;gap:18px;align-items:center}
+.cardwrap{width:100%;overflow-x:auto;display:flex;justify-content:center}
+.cap{font-size:13px;color:var(--muted);margin:0 0 6px;text-align:center}
+.card{--c:#1d3557;width:428px;height:270px;flex:none;border-radius:0;position:relative;overflow:hidden;background:#fff;color:#14213d;
+box-shadow:0 6px 20px rgba(20,33,61,.22);font-family:'Cairo',Tahoma,Arial,sans-serif;direction:rtl}
+.card .band{position:absolute;inset:0 0 auto 0;height:62px;background:var(--c);color:#fff;display:flex;align-items:center;gap:10px;padding:0 14px}
+.card .logo{width:40px;height:40px;border-radius:50%;background:#f2b705;color:var(--c);display:grid;place-items:center;font-weight:800;font-size:20px;flex:none}
+.card .sch{font-weight:800;font-size:14px;line-height:1.3}
+.card .sch small{display:block;font-weight:400;font-size:11px;opacity:.85}
+.card .type{margin-inline-start:auto;background:#f2b705;color:#14213d;font-weight:800;font-size:12px;padding:2px 10px;border-radius:20px}
+.card .photo{position:absolute;left:16px;top:76px;width:104px;height:132px;border-radius:10px;border:3px solid var(--c);background:#e3eaf4 center/cover no-repeat;display:grid;place-items:center;color:#7d8da8;font-size:12px;text-align:center}
+.card .info{position:absolute;right:16px;top:72px;left:140px}
+.card .nm{font-weight:800;font-size:20px;line-height:1.25;color:var(--c)}
+.card dl{margin:8px 0 0;display:grid;grid-template-columns:auto 1fr;gap:1px 10px;font-size:12.5px}
+.card dt{color:#5b6b85}
+.card dd{margin:0;font-weight:600}
+.card .foot{position:absolute;inset:auto 0 0 0;height:34px;background:#eaf0f8;display:flex;align-items:center;justify-content:space-between;padding:0 16px;font-size:12px;font-weight:600}
+.card .foot b{color:var(--c)}
+.card .stripe{position:absolute;right:0;top:62px;bottom:34px;width:6px;background:#f2b705}
+.back .bk{position:absolute;inset:62px 16px 40px 16px;font-size:12.5px;display:grid;gap:6px;align-content:start;padding-top:10px}
+.back .bk p{margin:0}
+.back .bk .lbl{color:#5b6b85}
+.back .sig{margin-top:6px;border:1px dashed #9fb0cc;border-radius:8px;height:54px;padding:4px 8px;color:#7d8da8;font-size:11px}
+.back .bars{height:26px;margin-top:4px;background:repeating-linear-gradient(90deg,#14213d 0 2px,transparent 2px 4px,#14213d 4px 5px,transparent 5px 9px);border-radius:2px;opacity:.85}
+textarea{width:100%;font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);resize:vertical}
+textarea:focus-visible{outline:3px solid var(--accent);outline-offset:1px}
+.hint{font-size:13px;color:var(--muted);margin:2px 0 0}
+#sheet{display:none}
+.pg{display:grid;grid-template-columns:repeat(2,95.6mm);grid-auto-rows:64mm;justify-content:center;align-content:center;width:210mm;height:296mm;direction:rtl;break-after:page;page-break-after:always;background:#fff}
+.pg:last-child{break-after:auto;page-break-after:auto}
+.cell{width:95.6mm;height:64mm;padding:5mm}
+.cw{position:relative;width:85.6mm;height:54mm}
+.cw .card{position:absolute;top:0;right:0;transform-origin:top right;transform:scale(.7559);box-shadow:none;border-radius:0}
+.mh{position:absolute;width:3mm;height:0;border-top:.25mm solid #000}
+.mv{position:absolute;height:3mm;width:0;border-left:.25mm solid #000}
+#sheet *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+@media print{
+@page{size:A4;margin:0}
+body{background:#fff;margin:0}
+main{display:none!important}
+#sheet{display:block}
+}
+</style>
+</head>
+<body>
+<main>
+<h1>بطاقة تلميذ</h1>
+<p class="sub">أدخل المعلومات وستظهر البطاقة مباشرة، ثم احفظها صورة أو اطبعها بوجهين.</p>
+
+<section class="panel noprint" aria-label="المعلومات">
+<label for="school">اسم المؤسسة</label>
+<input id="school" value="ثانوية الشهيد ...">
+<label for="city">الولاية / البلدية</label>
+<input id="city" value="عنابة">
+<div class="row">
+<div><label for="last">اللقب</label><input id="last" value="بن علي"></div>
+<div><label for="first">الاسم</label><input id="first" value="أمين"></div>
+</div>
+<div class="row">
+<div><label for="birth">تاريخ الميلاد</label><input id="birth" type="date" value="2009-03-15"></div>
+<div><label for="cls">القسم</label><input id="cls" value="3 ع ت 2"></div>
+</div>
+<div class="row">
+<div><label for="num">رقم التلميذ</label><input id="num" value="0001"></div>
+<div><label for="year">السنة الدراسية</label><input id="year" value="2026/2027"></div>
+</div>
+<label for="phone">هاتف المؤسسة</label>
+<input id="phone" dir="ltr" style="text-align:right" value="038 00 00 00">
+<label for="photo">الصورة</label>
+<input id="photo" type="file" accept="image/*">
+<label>لون البطاقة</label>
+<div class="colors" id="colors" role="group" aria-label="لون البطاقة"></div>
+<div class="btns">
+<button class="act" id="sf">حفظ الوجه الأمامي</button>
+<button class="act" id="sb">حفظ الوجه الخلفي</button>
+<button class="act alt" id="pr">طباعة هذه البطاقة</button>
+<button class="act alt" id="rs">مسح البيانات</button>
+</div>
+
+<hr style="border:0;border-top:1px solid var(--line);margin:18px 0 6px">
+<h2 style="font-size:17px;margin:6px 0 0">بطاقات لقائمة تلاميذ</h2>
+<p class="hint">كل سطر تلميذ: اللقب، الاسم، تاريخ الميلاد، القسم، الرقم. الصق الأعمدة من Excel مباشرة أو افتح ملف CSV. المؤسسة والسنة والهاتف واللون تؤخذ من الحقول أعلاه.</p>
+<label for="list">القائمة</label>
+<textarea id="list" rows="6" placeholder="بن علي، أمين، 15/03/2009، 3 ع ت 2، 0001&#10;مسعودي، سارة، 02/11/2008، 3 ع ت 2، 0002"></textarea>
+<label for="csv">أو افتح ملف CSV</label>
+<input id="csv" type="file" accept=".csv,.txt,text/csv,text/plain">
+<label style="display:flex;gap:8px;align-items:center;font-weight:400"><input type="checkbox" id="hdr" style="width:auto"> السطر الأول عناوين الأعمدة</label>
+<p class="hint" id="cnt"></p>
+<div class="btns"><button class="act" id="pb">طباعة الدفعة مع علامات القص</button></div>
+<p class="hint">تُطبع 8 بطاقات في كل ورقة A4 بمقاس 85.6 × 54 مم، مع علامات عند الزوايا الأربع. بعد كل ورقة أمامية تأتي ورقة خلفية مرتبة للطباعة على وجهين (قلب على الحافة الطويلة). عطّل «الرؤوس والتذييلات» ومقياس الصفحة 100% في نافذة الطباعة. بطاقات القائمة تُطبع دون صور.</p>
+</section>
+
+<section class="stage" aria-label="معاينة">
+<div><p class="cap">الوجه الأمامي</p>
+<div class="cardwrap"><div class="card" id="front">
+<div class="band"><div class="logo" id="lg">م</div><div class="sch"><span id="fSchool"></span><small id="fCity"></small></div><span class="type">بطاقة تلميذ</span></div>
+<div class="stripe"></div>
+<div class="photo" id="fPhoto">الصورة</div>
+<div class="info">
+<div class="nm" id="fName"></div>
+<dl>
+<dt>تاريخ الميلاد</dt><dd id="fBirth"></dd>
+<dt>القسم</dt><dd id="fCls"></dd>
+<dt>رقم التلميذ</dt><dd id="fNum"></dd>
+</dl>
+</div>
+<div class="foot"><span>السنة الدراسية: <b id="fYear"></b></span><span id="fNum2"></span></div>
+</div></div></div>
+
+<div><p class="cap">الوجه الخلفي</p>
+<div class="cardwrap"><div class="card back" id="back">
+<div class="band"><div class="logo" id="lg2">م</div><div class="sch"><span id="bSchool"></span><small id="bCity"></small></div></div>
+<div class="stripe"></div>
+<div class="bk">
+<p><span class="lbl">الاسم الكامل:</span> <b id="bName"></b></p>
+<p><span class="lbl">هاتف المؤسسة:</span> <b id="bPhone" dir="ltr"></b></p>
+<p>هذه البطاقة شخصية، وعلى صاحبها إبرازها عند الدخول إلى المؤسسة. وعند العثور عليها يرجى إعادتها إلى المؤسسة.</p>
+<div class="sig">إمضاء مدير المؤسسة وختمها</div>
+<div class="bars" aria-hidden="true"></div>
+</div>
+<div class="foot"><span>سارية المفعول خلال السنة الدراسية</span><b id="bYear"></b></div>
+</div></div></div>
+</section>
+</main>
+<div id="sheet" aria-hidden="true"></div>
+
+<script>
+(function(){
+var KEY='carte-eleve-v1';
+var ids=['school','city','last','first','birth','cls','num','year','phone'];
+var $=function(i){return document.getElementById(i)};
+var state={color:'#1d3557',photo:''};
+var cols=['#1d3557','#0b6e4f','#7b2d5b','#b23a28','#1f6f8b'];
+
+function save(){try{var o={color:state.color,photo:state.photo};ids.forEach(function(i){o[i]=$(i).value});localStorage.setItem(KEY,JSON.stringify(o))}catch(e){}}
+function load(){try{var o=JSON.parse(localStorage.getItem(KEY)||'null');if(!o)return;ids.forEach(function(i){if(o[i]!=null)$(i).value=o[i]});state.color=o.color||state.color;state.photo=o.photo||''}catch(e){}}
+
+function fmtDate(v){if(!v)return'';var p=v.split('-');return p[2]+'/'+p[1]+'/'+p[0]}
+function render(){
+var v=function(i){return $(i).value.trim()};
+var name=(v('first')+' '+v('last')).trim();
+$('fSchool').textContent=v('school');$('bSchool').textContent=v('school');
+$('fCity').textContent=v('city');$('bCity').textContent=v('city');
+$('fName').textContent=name;$('bName').textContent=name;
+$('fBirth').textContent=fmtDate($('birth').value);
+$('fCls').textContent=v('cls');$('fNum').textContent=v('num');
+$('fNum2').textContent=v('num')?('رقم '+v('num')):'';
+$('fYear').textContent=v('year');$('bYear').textContent=v('year');
+$('bPhone').textContent=v('phone');
+var ch=(v('school').replace(/^(ثانوية|متوسطة|ابتدائية|مدرسة)\s*/,'').charAt(0))||'م';
+$('lg').textContent=ch;$('lg2').textContent=ch;
+['front','back'].forEach(function(i){$(i).style.setProperty('--c',state.color)});
+var ph=$('fPhoto');
+if(state.photo){ph.style.backgroundImage='url('+state.photo+')';ph.textContent=''}else{ph.style.backgroundImage='none';ph.textContent='الصورة'}
+Array.prototype.forEach.call($('colors').children,function(b){b.setAttribute('aria-pressed',b.dataset.c===state.color)});
+}
+function update(){render();save()}
+
+cols.forEach(function(c){var b=document.createElement('button');b.type='button';b.className='sw';b.style.background=c;b.dataset.c=c;b.setAttribute('aria-label','لون '+c);
+b.onclick=function(){state.color=c;update()};$('colors').appendChild(b)});
+
+ids.forEach(function(i){$(i).addEventListener('input',update)});
+
+$('photo').addEventListener('change',function(e){
+var f=e.target.files[0];if(!f)return;
+var r=new FileReader();
+r.onload=function(){
+var img=new Image();
+img.onload=function(){
+var W=312,H=396,cv=document.createElement('canvas');cv.width=W;cv.height=H;
+var s=Math.max(W/img.width,H/img.height),w=img.width*s,h=img.height*s;
+cv.getContext('2d').drawImage(img,(W-w)/2,(H-h)/2,w,h);
+state.photo=cv.toDataURL('image/jpeg',.85);update();
+};
+img.src=r.result;
+};
+r.readAsDataURL(f);
+});
+
+function shot(id,fn){
+if(typeof html2canvas==='undefined'){alert('تعذّر تحميل أداة الحفظ. تحقق من الاتصال بالإنترنت.');return}
+html2canvas($(id),{scale:3,backgroundColor:null,useCORS:true}).then(function(c){
+var a=document.createElement('a');a.download=fn+'.png';a.href=c.toDataURL('image/png');document.body.appendChild(a);a.click();a.remove();
+});
+}
+var base=function(){return 'بطاقة-'+($('last').value.trim()||'تلميذ')};
+$('sf').onclick=function(){shot('front',base()+'-أمامي')};
+$('sb').onclick=function(){shot('back',base()+'-خلفي')};
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function common(){var v=function(i){return $(i).value.trim()};return{school:v('school'),city:v('city'),year:v('year'),phone:v('phone'),color:state.color}}
+function merge(x){var d=common();for(var k in x)d[k]=x[k];return d}
+function cur(){return merge({last:$('last').value.trim(),first:$('first').value.trim(),birth:fmtDate($('birth').value),cls:$('cls').value.trim(),num:$('num').value.trim(),photo:state.photo})}
+function cardHTML(d,side){
+var name=(d.first+' '+d.last).trim();
+var ch=(d.school.replace(/^(ثانوية|متوسطة|ابتدائية|مدرسة)\s*/,'').charAt(0))||'م';
+var band='<div class="band"><div class="logo">'+esc(ch)+'</div><div class="sch"><span>'+esc(d.school)+'</span><small>'+esc(d.city)+'</small></div>'+(side==='f'?'<span class="type">بطاقة تلميذ</span>':'')+'</div><div class="stripe"></div>';
+if(side==='f')return '<div class="card" style="--c:'+d.color+'">'+band+'<div class="photo"'+(d.photo?' style="background-image:url('+d.photo+')"':'')+'>'+(d.photo?'':'الصورة')+'</div><div class="info"><div class="nm">'+esc(name)+'</div><dl><dt>تاريخ الميلاد</dt><dd>'+esc(d.birth)+'</dd><dt>القسم</dt><dd>'+esc(d.cls)+'</dd><dt>رقم التلميذ</dt><dd>'+esc(d.num)+'</dd></dl></div><div class="foot"><span>السنة الدراسية: <b>'+esc(d.year)+'</b></span><span>'+(d.num?'رقم '+esc(d.num):'')+'</span></div></div>';
+return '<div class="card back" style="--c:'+d.color+'">'+band+'<div class="bk"><p><span class="lbl">الاسم الكامل:</span> <b>'+esc(name)+'</b></p><p><span class="lbl">هاتف المؤسسة:</span> <b dir="ltr">'+esc(d.phone)+'</b></p><p>هذه البطاقة شخصية، وعلى صاحبها إبرازها عند الدخول إلى المؤسسة. وعند العثور عليها يرجى إعادتها إلى المؤسسة.</p><div class="sig">إمضاء مدير المؤسسة وختمها</div><div class="bars"></div></div><div class="foot"><span>سارية المفعول خلال السنة الدراسية</span><b>'+esc(d.year)+'</b></div></div>';
+}
+var marks='';[0,1].forEach(function(x){[0,1].forEach(function(y){marks+='<i class="mh" style="top:'+(y?'100%':'0')+';'+(x?'right':'left')+':-4mm"></i><i class="mv" style="'+(x?'right':'left')+':0;'+(y?'bottom':'top')+':-4mm"></i>'})});
+function cell(h){return '<div class="cell"><div class="cw">'+h+marks+'</div></div>'}
+var empty='<div class="cell"></div>';
+function buildSheet(list){
+var pages='';
+for(var i=0;i<list.length;i+=8){
+var chunk=list.slice(i,i+8),f='',b='';
+for(var r=0;r<chunk.length;r+=2){
+var a=chunk[r],c=chunk[r+1];
+f+=cell(cardHTML(a,'f'))+(c?cell(cardHTML(c,'f')):empty);
+b+=(c?cell(cardHTML(c,'b')):empty)+cell(cardHTML(a,'b'));
+}
+pages+='<div class="pg">'+f+'</div><div class="pg">'+b+'</div>';
+}
+$('sheet').innerHTML=pages;
+}
+function parseList(){
+var lines=$('list').value.replace(/\r/g,'').split('\n').filter(function(l){return l.trim()});
+if($('hdr').checked)lines.shift();
+return lines.map(function(l){
+var p=l.split(/\t|;|،|,/).map(function(s){return s.trim()});
+var bd=p[2]||'',m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(bd);if(m)bd=m[3]+'/'+m[2]+'/'+m[1];
+return merge({last:p[0]||'',first:p[1]||'',birth:bd,cls:p[3]||$('cls').value.trim(),num:p[4]||'',photo:''});
+});
+}
+function count(){var n=parseList().length;$('cnt').textContent=n?('عدد التلاميذ: '+n+' — عدد الأوراق: '+(Math.ceil(n/8)*2)+' (أمامي وخلفي)'):'لم تُدخل أي تلميذ بعد.';try{localStorage.setItem(KEY+'-list',$('list').value)}catch(e){}}
+$('list').addEventListener('input',count);
+$('hdr').addEventListener('change',count);
+$('csv').addEventListener('change',function(e){var f=e.target.files[0];if(!f)return;var r=new FileReader();r.onload=function(){$('list').value=String(r.result).replace(/^\uFEFF/,'');count()};r.readAsText(f,'utf-8')});
+$('pr').onclick=function(){buildSheet([cur()]);window.print()};
+$('pb').onclick=function(){var l=parseList();if(!l.length){alert('أدخل قائمة التلاميذ أولًا: سطر لكل تلميذ.');return}buildSheet(l);window.print()};
+try{var sl=localStorage.getItem(KEY+'-list');if(sl)$('list').value=sl}catch(e){}
+count();
+$('rs').onclick=function(){
+if(!confirm('هل تريد مسح كل البيانات والصورة؟'))return;
+try{localStorage.removeItem(KEY)}catch(e){}
+ids.forEach(function(i){$(i).value=''});state.photo='';$('photo').value='';update();
+};
+
+load();render();
+})();
+</script>
+</body>
+</html>
